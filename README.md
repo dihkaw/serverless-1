@@ -25,28 +25,11 @@ Proyek ini adalah **buku tamu digital** yang digunakan pada acara resepsi pernik
 | `PUT`   | `/guests/{id}`       | Memperbarui data tamu       |
 | `DELETE`| `/guests/{id}`       | Menghapus data tamu         |
 
+update file **script.js** Anda untuk menambahkan URL API
 
 ---
 
 ## **3. Membuat Lambda**
-**Setiap metode HTTP dihubungkan ke Lambda Function berikut:**
-- `POST`: `lambda_add_guest.py`
-- `GET`: `lambda_get_guests.py`
-- `PUT`: `lambda_update_guest.py`
-- `DELETE`: `lambda_delete_guest.py`
-
----
-
-## **4. Membuat API Gateway & Lambda**
-**API Gateway digunakan untuk menangani request HTTP**, dengan endpoint berikut:
-
-| Method  | Endpoint             | Deskripsi                   |
-|---------|----------------------|-----------------------------|
-| `GET`   | `/guests`            | Mendapatkan semua tamu      |
-| `POST`  | `/guests`            | Menambahkan tamu baru       |
-| `PUT`   | `/guests/{id}`       | Memperbarui data tamu       |
-| `DELETE`| `/guests/{id}`       | Menghapus data tamu         |
-
 **Setiap metode HTTP dihubungkan ke Lambda Function berikut:**
 - `POST`: `lambda_add_guest.py`
 - `GET`: `lambda_get_guests.py`
