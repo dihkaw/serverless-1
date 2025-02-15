@@ -16,7 +16,7 @@ Proyek ini adalah **buku tamu digital** yang digunakan pada acara resepsi pernik
 4. Pastikan pengaturan CORS telah diatur agar API dapat diakses dari frontend.
 
 ---
-## **2. Membuat API Gateway **
+## **2. Membuat API Gateway**
 **API Gateway digunakan untuk menangani request HTTP**, dengan endpoint berikut:
 | Method  | Endpoint             | Deskripsi                   |
 |---------|----------------------|-----------------------------|
