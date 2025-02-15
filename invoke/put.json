@@ -1,0 +1,6 @@
+{
+  "resource": "/guests/{id}",
+  "httpMethod": "PUT",
+  "pathParameters": { "id": "1707898761" },
+  "body": "{\"name\": \"Andi\", \"message\": \"Semoga bahagia selalu!\"}"
+}
