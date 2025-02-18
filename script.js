@@ -2,13 +2,33 @@ $(document).ready(function() {
     const apiUrl = 'https://urlAPIgatewayAndaguests'; // Ganti dengan URL API Gateway Anda
     let selectedGuestId = null; // Menyimpan ID tamu yang dipilih untuk diupdate
 
-    // Fetch guests (GET)
+    // Fungsi untuk menampilkan notifikasi
+    function showNotification(message, type) {
+        const notification = $('#notification');
+        notification.removeClass('d-none alert-success alert-danger');
+        notification.addClass(`alert-${type}`);
+        notification.text(message);
+
+        // Notifikasi akan hilang dalam 3 detik
+        setTimeout(() => {
+            notification.addClass('d-none');
+        }, 3000);
+    }
+
+    // Fetch guests (READ - GET)
     function loadGuests() {
         $.ajax({
             url: apiUrl,
             method: 'GET',
             success: function(data) {
                 $('#guestList').empty();
+
+                if (data.length === 0) {
+                    showNotification('Daftar tamu kosong.', 'warning');
+                } else {
+                    showNotification('Daftar tamu berhasil dimuat.', 'success');
+                }
+
                 data.forEach((guest, index) => {
                     $('#guestList').append(`
                         <tr>
@@ -22,11 +42,14 @@ $(document).ready(function() {
                         </tr>
                     `);
                 });
+            },
+            error: function() {
+                showNotification('Gagal memuat daftar tamu!', 'danger');
             }
         });
     }
 
-    // Tambah tamu (POST)
+    // Tambah/Edit tamu (CREATE/UPDATE - POST/PUT)
     $('#guestForm').submit(function(event) {
         event.preventDefault();
         const name = $('#name').val();
@@ -39,39 +62,51 @@ $(document).ready(function() {
             method: method,
             data: JSON.stringify({ name, message }),
             contentType: 'application/json',
-            success: function(response) {
+            success: function() {
                 $('#name').val('');
                 $('#message').val('');
                 selectedGuestId = null; // Reset selected guest
                 loadGuests();
+
+                if (method === 'POST') {
+                    showNotification('Tamu berhasil ditambahkan!', 'success');
+                } else {
+                    showNotification('Tamu berhasil diperbarui!', 'success');
+                }
             },
-            error: function(error) {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+            error: function() {
+                if (method === 'POST') {
+                    showNotification('Gagal menambahkan tamu!', 'danger');
+                } else {
+                    showNotification('Gagal memperbarui tamu!', 'danger');
+                }
             }
         });
     });
 
-    // Edit guest (PUT)
+    // Edit guest (Memasukkan data ke form, bukan API call)
     window.editGuest = function(id, name, message) {
         selectedGuestId = id;
         $('#name').val(name);
         $('#message').val(message);
+        showNotification('Edit mode: Silakan perbarui data tamu.', 'info');
     };
 
-    // Hapus guest (DELETE)
+    // Hapus tamu (DELETE)
     window.deleteGuest = function(id) {
         $.ajax({
             url: `${apiUrl}/${id}`,
             method: 'DELETE',
             success: function() {
                 loadGuests();
+                showNotification('Tamu berhasil dihapus!', 'success');
             },
-            error: function(error) {
-                alert('Terjadi kesalahan saat menghapus tamu.');
+            error: function() {
+                showNotification('Gagal menghapus tamu!', 'danger');
             }
         });
     };
 
-    // Load tamu saat halaman dimuat
+    // Load daftar tamu saat halaman dimuat
     loadGuests();
 });
