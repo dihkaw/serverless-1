@@ -30,10 +30,18 @@ def lambda_handler(event, context):
         # Mengembalikan data tamu
         return {
             'statusCode': 200,
-            'body': json.dumps(response['Items'])
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'  # Izinkan akses dari semua domain
+            },
+            'body': json.dumps(response['Items'])  # Langsung kembalikan array objek
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'  # Izinkan akses dari semua domain
+            },
             'body': json.dumps({'message': str(e)})
         }
