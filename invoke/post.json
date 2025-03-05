@@ -1,5 +1,4 @@
 {
-  "resource": "/guests",
-  "httpMethod": "POST",
-  "body": "{\"name\": \"Andi\", \"message\": \"Selamat menikah!\"}"
+    "nama": "John Doe",
+    "pesan": "Selamat menempuh hidup baru!"
 }
