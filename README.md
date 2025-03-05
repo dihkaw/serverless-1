@@ -41,7 +41,7 @@ update file **script.js** Anda untuk menambahkan URL API
 ## **4. Menyimpan Data ke DynamoDB**
 Buat tabel **DynamoDB** dengan nama `BukuTamuTable` dengan:
 - **Partition Key**: `id` (String)
-- **Atribut Lain (opsional) **: `name`, `message`, `timestamp`
+- **Atribut Lain (opsional)**: `name`, `message`, `timestamp`
 
 **Struktur Data:**
 ```json
