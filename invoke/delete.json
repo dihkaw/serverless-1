@@ -1,5 +1,5 @@
 {
-  "resource": "/guests/{id}",
+  "resource": "/{id}",
   "httpMethod": "DELETE",
   "pathParameters": { "id": "1707898761" }
 }
