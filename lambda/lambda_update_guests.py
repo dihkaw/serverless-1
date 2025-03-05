@@ -1,32 +1,45 @@
 import json
 import boto3
 
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('BukuTamuTable')
-
 def lambda_handler(event, context):
+    # Membuat klien DynamoDB
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('BukuTamuTable')
+    
     try:
-        guest_id = event['pathParameters']['id']
+        # Ambil ID dari path parameter
+        id = event['pathParameters']['id']
+        
+        # Parse data dari body request
         body = json.loads(event['body'])
-
-        response = table.update_item(
-            Key={'id': guest_id},
-            UpdateExpression="SET #n = :name, message = :message",
-            ExpressionAttributeNames={"#n": "name"},
+        nama = body['nama']
+        pesan = body['pesan']
+        
+        # Perbarui item di tabel
+        table.update_item(
+            Key={'id': id},
+            UpdateExpression='SET nama = :nama, pesan = :pesan',
             ExpressionAttributeValues={
-                ":name": body["name"],
-                ":message": body["message"]
-            },
-            ReturnValues="UPDATED_NEW"
+                ':nama': nama,
+                ':pesan': pesan
+            }
         )
-
+        
+        # Mengembalikan respons sukses
         return {
-            "statusCode": 200,
-            "body": json.dumps({"message": "Data tamu berhasil diperbarui", "updated": response["Attributes"]})
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'  # Izinkan akses dari semua domain
+            },
+            'body': json.dumps({'message': 'Tamu berhasil diperbarui!'})
         }
-
     except Exception as e:
         return {
-            "statusCode": 500,
-            "body": json.dumps({"error": str(e)})
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({'message': str(e)})
         }
