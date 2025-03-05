@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    const apiUrl = 'https://urlAPIgatewayAndaguests'; // Ganti dengan URL API Gateway Anda
+    const apiUrl = 'https://nutp44uh3f.execute-api.us-east-1.amazonaws.com/prod'; // Ganti dengan URL API Gateway Anda
     let selectedGuestId = null; // Menyimpan ID tamu yang dipilih untuk diupdate
 
     // Fungsi untuk menampilkan notifikasi
@@ -20,30 +20,37 @@ $(document).ready(function() {
         $.ajax({
             url: apiUrl,
             method: 'GET',
-            success: function(data) {
+            success: function(response) {
+                console.log('Respons API:', response); // Debug: Lihat respons API di konsol
+    
+                // Parse `body` dari string JSON ke array objek
+                const data = JSON.parse(response.body);
+    
                 $('#guestList').empty();
-
+    
                 if (data.length === 0) {
                     showNotification('Daftar tamu kosong.', 'warning');
                 } else {
                     showNotification('Daftar tamu berhasil dimuat.', 'success');
                 }
-
+    
                 data.forEach((guest, index) => {
+                    console.log('Tamu:', guest); // Debug: Lihat setiap tamu di konsol
                     $('#guestList').append(`
                         <tr>
                             <td>${index + 1}</td>
-                            <td>${guest.name}</td>
-                            <td>${guest.message}</td>
+                            <td>${guest.nama}</td>
+                            <td>${guest.pesan}</td>
                             <td>
-                                <button class="btn btn-info btn-sm" onclick="editGuest('${guest.id}', '${guest.name}', '${guest.message}')">Edit</button>
+                                <button class="btn btn-info btn-sm" onclick="editGuest('${guest.id}', '${guest.nama}', '${guest.pesan}')">Edit</button>
                                 <button class="btn btn-danger btn-sm" onclick="deleteGuest('${guest.id}')">Hapus</button>
                             </td>
                         </tr>
                     `);
                 });
             },
-            error: function() {
+            error: function(xhr, status, error) {
+                console.error('Error:', error); // Debug: Lihat error di konsol
                 showNotification('Gagal memuat daftar tamu!', 'danger');
             }
         });
@@ -60,7 +67,7 @@ $(document).ready(function() {
         $.ajax({
             url: url,
             method: method,
-            data: JSON.stringify({ name, message }),
+            data: JSON.stringify({ nama: name, pesan: message }), // Sesuaikan dengan properti yang diharapkan API
             contentType: 'application/json',
             success: function() {
                 $('#name').val('');
