@@ -13,11 +13,11 @@ def lambda_handler(event, context):
         # Jika tidak ada item yang ditemukan, buat 5 baris data awal
         if not response['Items']:
             initial_data = [
-                {'id': '1', 'nama': 'Tamu 1', 'pesan': 'Halo, ini pesan dari Tamu 1'},
-                {'id': '2', 'nama': 'Tamu 2', 'pesan': 'Halo, ini pesan dari Tamu 2'},
-                {'id': '3', 'nama': 'Tamu 3', 'pesan': 'Halo, ini pesan dari Tamu 3'},
-                {'id': '4', 'nama': 'Tamu 4', 'pesan': 'Halo, ini pesan dari Tamu 4'},
-                {'id': '5', 'nama': 'Tamu 5', 'pesan': 'Halo, ini pesan dari Tamu 5'}
+                {'id': '1', 'nama': 'Agus', 'pesan': 'Samawa ya gaes'},
+                {'id': '2', 'nama': 'Bambang', 'pesan': 'Sugeng ndalu'},
+                {'id': '3', 'nama': 'Cheryl', 'pesan': 'GWS yah'},
+                {'id': '4', 'nama': 'Darsimin', 'pesan': 'Semoga langgeng'},
+                {'id': '5', 'nama': 'Eriana', 'pesan': 'Selamat menempuh hidup baru, salam dari Bapak'}
             ]
             
             # Masukkan data awal ke dalam tabel
