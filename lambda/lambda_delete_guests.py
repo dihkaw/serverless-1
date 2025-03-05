@@ -2,22 +2,32 @@ import json
 import boto3
 
 def lambda_handler(event, context):
-    # Mengambil ID tamu dari parameter path
-    guest_id = event['pathParameters']['id']
-    
     # Membuat klien DynamoDB
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('BukuTamuTable')
     
     try:
-        # Menghapus item dari DynamoDB
-        table.delete_item(Key={'id': guest_id})
+        # Ambil ID dari path parameter
+        id = event['pathParameters']['id']
+        
+        # Hapus item dari tabel
+        table.delete_item(Key={'id': id})
+        
+        # Mengembalikan respons sukses
         return {
             'statusCode': 200,
-            'body': json.dumps({'message': 'Data tamu berhasil dihapus!'})
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'  # Izinkan akses dari semua domain
+            },
+            'body': json.dumps({'message': 'Tamu berhasil dihapus!'})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
             'body': json.dumps({'message': str(e)})
         }
