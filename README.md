@@ -20,10 +20,10 @@ Proyek ini adalah **buku tamu digital** yang digunakan pada acara resepsi pernik
 **API Gateway digunakan untuk menangani request HTTP**, dengan endpoint berikut:
 | Method  | Endpoint             | Deskripsi                   |
 |---------|----------------------|-----------------------------|
-| `GET`   | `/`                  | Mendapatkan semua tamu      |
-| `POST`  | `/`                  | Menambahkan tamu baru       |
-| `PUT`   | `/{id}`              | Memperbarui data tamu       |
-| `DELETE`| `/{id}`              | Menghapus data tamu         |
+| `GET`   | `/guests/`                  | Mendapatkan semua tamu      |
+| `POST`  | `/guests/`                  | Menambahkan tamu baru       |
+| `PUT`   | `/guests/{id}`              | Memperbarui data tamu       |
+| `DELETE`| `/guests/{id}`              | Menghapus data tamu         |
 
 update file **script.js** Anda untuk menambahkan URL API
 
@@ -41,13 +41,12 @@ update file **script.js** Anda untuk menambahkan URL API
 ## **4. Menyimpan Data ke DynamoDB**
 Buat tabel **DynamoDB** dengan nama `BukuTamuTable` dengan:
 - **Partition Key**: `id` (String)
-- **Atribut Lain (opsional)**: `name`, `message`, `timestamp`
+- **Atribut Lain (opsional)**: `nama`, `pesan`
 
 **Struktur Data:**
 ```json
 {
   "id": "1707898761",
-  "name": "Andi",
-  "message": "Selamat menikah!",
-  "timestamp": "2025-02-15 10:30:45"
+  "nama": "Andi",
+  "pesan": "Selamat menikah!"
 }
