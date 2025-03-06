@@ -6,6 +6,8 @@ Proyek ini adalah **buku tamu digital** yang digunakan pada acara resepsi pernik
 3. **AWS Lambda (Python)** sebagai backend untuk memproses permintaan.
 4. **DynamoDB** untuk menyimpan data tamu.
 
+![Arsitektur](serverless-1.png)
+
 ---
 
 ## **1. Membuat Halaman Web Static (S3)**
